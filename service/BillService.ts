@@ -1,6 +1,15 @@
 import axios from "axios";
 
 class BillService {
+  public async addBill(newBill: {
+    name: string;
+    amount: string;
+    category: string;
+    createTime: string;
+  }) {
+    const response = await axios.post(`${this.API_URL}/addBill`, newBill);
+    return response.data;
+  }
   private API_URL: string;
 
   constructor() {
