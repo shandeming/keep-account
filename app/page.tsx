@@ -8,7 +8,7 @@ export default function Home() {
   const [bills, setBills] = useState<Bill[]>([]);
   const [newBill, setNewBill] = useState({
     name: "",
-    amount: "",
+    amount: 0,
     category: "",
     createTime: "",
   });
@@ -47,7 +47,7 @@ export default function Home() {
         } else {
           setNewBill({
             name: "",
-            amount: "",
+            amount: 0,
             category: "",
             createTime: "",
           });
@@ -94,7 +94,6 @@ export default function Home() {
           name="createTime"
           value={newBill.createTime}
           onChange={handleInputChange}
-          required
           className="p-2 border border-gray-300 rounded"
         />
         <Button type="submit" className="p-2 bg-blue-500 text-white rounded">

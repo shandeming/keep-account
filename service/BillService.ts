@@ -3,7 +3,7 @@ import axios from "axios";
 class BillService {
   public async addBill(newBill: {
     name: string;
-    amount: string;
+    amount: number;
     category: string;
     createTime: string;
   }) {
@@ -13,7 +13,7 @@ class BillService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = "http://localhost:8080/bill";
+    this.API_URL = "keep-account-api.calvinzhaomr.workers.dev";
   }
 
   // get all bill
