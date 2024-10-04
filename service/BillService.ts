@@ -14,7 +14,7 @@ class BillService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = "https://keep-account-api.calvinzhaomr.workers.dev/";
+    this.API_URL = "https://keep-account-api.calvinzhaomr.workers.dev";
   }
 
   // get all bill
