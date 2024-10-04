@@ -18,7 +18,6 @@ export default function Home() {
     billService
       .getAllBill()
       .then((data) => {
-        console.log(data);
         setBills(data);
       })
       .catch((error) => {
@@ -128,7 +127,9 @@ export default function Home() {
             <span style={{ flex: 1 }}>{bill.name}</span>
             <span style={{ flex: 1 }}>{bill.amount}</span>
             <span style={{ flex: 1 }}>{bill.category}</span>
-            <span style={{ flex: 1 }}>{bill.createTime.substring(0, 10)}</span>
+            <span style={{ flex: 1 }}>
+              {bill.createTime ? bill.createTime.substring(0, 10) : "N/A"}
+            </span>
           </li>
         ))}
       </ul>
