@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BillService from "@/service/BillService"; // Adjust the import path as necessary
 import { Bill } from "@/types/Bill";
 import { Button } from "@/components/ui/button";
@@ -13,18 +13,21 @@ export default function Home() {
     category: "",
     createTime: "",
   });
-
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const billService = useRef(new BillService());
   useEffect(() => {
-    const billService = new BillService();
-    billService
-      .getAllBill()
+    billService.current
+      .getBillByPage(page, pageSize)
       .then((data) => {
         setBills(data);
       })
       .catch((error) => {
         console.error("Error fetching bills:", error);
       });
-    billService
+  }, [page, pageSize]);
+  useEffect(() => {
+    billService.current
       .getMonthlyTotalAmount()
       .then((data) => {
         setMonthlySpending(data);
@@ -33,7 +36,6 @@ export default function Home() {
         console.error("Error fetching monthly spending:", error);
       });
   }, []);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setNewBill((prevBill) => ({ ...prevBill, [name]: value }));
@@ -69,12 +71,15 @@ export default function Home() {
   return (
     <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
       {monthlySpending ? (
-        <h1 className="text-3xl text-center font-bold">
-          Current Monthly Spending: ￥{monthlySpending}
+        <h1 className="text-2xl text-center font-bold pt-2">
+          Current Monthly Spending:
+          <span className="italic text-4xl text-center font-extrabold text-emerald-500">
+            ￥{monthlySpending}
+          </span>
         </h1>
       ) : null}
-      <h1 className="text-3xl text-center font-bold">Bill List</h1>
-      <form onSubmit={handleSubmit} className="mb-5 flex flex-col space-y-4">
+      <h1 className="text-2xl text-center font-bold">Bill List</h1>
+      <form onSubmit={handleSubmit} className="mb-4 flex flex-col space-y-4">
         <input
           type="text"
           name="name"
@@ -113,7 +118,7 @@ export default function Home() {
           Add Bill
         </Button>
       </form>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
+      <ul style={{ listStyleType: "none", padding: 0 }} className="mb-4">
         <li
           style={{
             display: "flex",
@@ -128,9 +133,9 @@ export default function Home() {
           <span style={{ flex: 1 }}>Category</span>
           <span style={{ flex: 1 }}>Create Time</span>
         </li>
-        {bills.map((bill) => (
+        {bills.map((bill, index) => (
           <li
-            key={bill.id}
+            key={index}
             style={{
               display: "flex",
               justifyContent: "space-between",
@@ -147,6 +152,22 @@ export default function Home() {
           </li>
         ))}
       </ul>
+      <div>
+        <Button
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => setPage(page + 1)}
+          disabled={bills.length < pageSize}
+          className="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }

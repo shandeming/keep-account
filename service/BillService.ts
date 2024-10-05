@@ -32,6 +32,21 @@ class BillService {
     //transform the data to Bill type
     return response.data;
   }
+  public async getBillByPage(page: number, pageSize: number) {
+    try {
+      const response = await axios.get(`${this.API_URL}/getBillByPage`, {
+        params: {
+          page,
+          pageSize,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching bills:", error);
+      throw error;
+    }
+  }
+
   public async getMonthlyTotalAmount() {
     const response = await axios.get(`${this.API_URL}/getMonthlyTotalAmount`);
     return response.data;
