@@ -4,8 +4,8 @@ class BillService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = "https://keep-account-api.calvinzhaomr.workers.dev";
-    // this.API_URL = "http://127.0.0.1:8787";
+    // this.API_URL = "https://keep-account-api.calvinzhaomr.workers.dev";
+    this.API_URL = "http://127.0.0.1:8787";
   }
 
   public async addBill(newBill: {
@@ -30,6 +30,10 @@ class BillService {
   public async getAllBill() {
     const response = await axios.get(`${this.API_URL}/getAllBill`);
     //transform the data to Bill type
+    return response.data;
+  }
+  public async getMonthlyTotalAmount() {
+    const response = await axios.get(`${this.API_URL}/getMonthlyTotalAmount`);
     return response.data;
   }
 }

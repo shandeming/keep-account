@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [bills, setBills] = useState<Bill[]>([]);
+  const [monthlySpending, setMonthlySpending] = useState(0);
   const [newBill, setNewBill] = useState({
     name: "",
     amount: 0,
@@ -22,6 +23,14 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Error fetching bills:", error);
+      });
+    billService
+      .getMonthlyTotalAmount()
+      .then((data) => {
+        setMonthlySpending(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching monthly spending:", error);
       });
   }, []);
 
@@ -59,6 +68,11 @@ export default function Home() {
 
   return (
     <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
+      {monthlySpending ? (
+        <h1 className="text-3xl text-center font-bold">
+          Current Monthly Spending: ￥{monthlySpending}
+        </h1>
+      ) : null}
       <h1 className="text-3xl text-center font-bold">Bill List</h1>
       <form onSubmit={handleSubmit} className="mb-5 flex flex-col space-y-4">
         <input
