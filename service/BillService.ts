@@ -14,11 +14,19 @@ class BillService {
     category: string;
     createTime: string;
   }) {
-    const response = await axios.post(`${this.API_URL}/addBill`, newBill);
-    return response.data;
+    try {
+      const response = await axios.post(`${this.API_URL}/addBill`, newBill, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error adding bill:", error);
+      throw error;
+    }
   }
 
-  // get all bill
   public async getAllBill() {
     const response = await axios.get(`${this.API_URL}/getAllBill`);
     //transform the data to Bill type
