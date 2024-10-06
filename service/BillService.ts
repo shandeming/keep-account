@@ -1,14 +1,14 @@
+import Config from "@/config/Config";
 import axios from "axios";
+import dotenv from "dotenv";
 
+dotenv.config();
+//TODO：去掉类包裹，参考https://github.com/gothinkster/node-express-realworld-example-app/blob/master/src/app/routes/article/article.service.ts
 class BillService {
-  private API_URL: string;
+  // public static API_URL = Config.API_URL;
+  public static API_URL = Config.API_URL;
 
-  constructor() {
-    this.API_URL = "https://keep-account-api.calvinzhaomr.workers.dev";
-    // this.API_URL = "http://127.0.0.1:8787";
-  }
-
-  public async addBill(newBill: {
+  public static async addBill(newBill: {
     name: string;
     amount: number;
     category: string;
@@ -27,12 +27,14 @@ class BillService {
     }
   }
 
-  public async getAllBill() {
+  public static async getAllBill() {
     const response = await axios.get(`${this.API_URL}/getAllBill`);
     //transform the data to Bill type
     return response.data;
   }
-  public async getBillByPage(page: number, pageSize: number) {
+  public static async getBillByPage(page: number, pageSize: number) {
+    //打印消息
+    console.log("getBillByPage");
     try {
       const response = await axios.get(`${this.API_URL}/getBillByPage`, {
         params: {
@@ -47,7 +49,7 @@ class BillService {
     }
   }
 
-  public async getMonthlyTotalAmount() {
+  public static async getMonthlyTotalAmount() {
     const response = await axios.get(`${this.API_URL}/getMonthlyTotalAmount`);
     return response.data;
   }

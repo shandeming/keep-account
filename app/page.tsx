@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BillService from "@/service/BillService"; // Adjust the import path as necessary
 import { Bill } from "@/types/Bill";
 import { Button } from "@/components/ui/button";
@@ -15,10 +15,9 @@ export default function Home() {
   });
   const [page, setPage] = useState(1);
   const pageSize = 10;
-  const billService = useRef(new BillService());
+  // const billService = useRef(new BillService());
   useEffect(() => {
-    billService.current
-      .getBillByPage(page, pageSize)
+    BillService.getBillByPage(page, pageSize)
       .then((data) => {
         setBills(data);
       })
@@ -27,8 +26,7 @@ export default function Home() {
       });
   }, [page, pageSize]);
   useEffect(() => {
-    billService.current
-      .getMonthlyTotalAmount()
+    BillService.getMonthlyTotalAmount()
       .then((data) => {
         setMonthlySpending(data);
       })
@@ -43,13 +41,11 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const billService = new BillService();
     const billToAdd = {
       ...newBill,
       createTime: newBill.createTime || new Date().toISOString().slice(0, 16),
     };
-    billService
-      .addBill(billToAdd)
+    BillService.addBill(billToAdd)
       .then((result) => {
         if (result != 1) {
           alert("Add bill failed");
