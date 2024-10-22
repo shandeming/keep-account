@@ -69,14 +69,13 @@ export default function Home() {
   return (
     <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
       {monthlySpending ? (
-        <h1 className="text-2xl text-center font-bold pt-2">
+        <h1 className="flex items-center justify-center text-2xl font-bold pt-2 pb-2">
           Current Monthly Spending:
-          <span className="italic text-4xl text-center font-extrabold text-emerald-500">
+          <span className="italic text-4xl font-extrabold text-emerald-500">
             ￥{monthlySpending}
           </span>
         </h1>
       ) : null}
-      <h1 className="text-2xl text-center font-bold">Bill List</h1>
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col space-y-4">
         <input
           type="text"
