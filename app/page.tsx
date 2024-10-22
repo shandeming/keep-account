@@ -34,7 +34,9 @@ export default function Home() {
         console.error("Error fetching monthly spending:", error);
       });
   }, []);
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setNewBill((prevBill) => ({ ...prevBill, [name]: value }));
   };
@@ -94,15 +96,22 @@ export default function Home() {
           required
           className="p-2 border border-gray-300 rounded"
         />
-        <input
-          type="text"
+        <select
           name="category"
           value={newBill.category}
           onChange={handleInputChange}
-          placeholder="Category"
           required
           className="p-2 border border-gray-300 rounded"
-        />
+        >
+          <option value="" disabled>
+            Select a category
+          </option>
+          <option value="Clothing">Clothing</option>
+          <option value="Food">Food</option>
+          <option value="Housing">Housing</option>
+          <option value="Transport">Transport</option>
+          <option value="Entertainment">Entertainment</option>
+        </select>
         <input
           type="datetime-local"
           name="createTime"
