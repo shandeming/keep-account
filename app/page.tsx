@@ -135,24 +135,40 @@ export default function Home() {
           <span style={{ flex: 1 }}>Category</span>
           <span style={{ flex: 1 }}>Create Time</span>
         </li>
-        {bills.map((bill, index) => (
-          <li
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "8px 0",
-              borderBottom: "1px solid #ccc",
-            }}
-          >
-            <span style={{ flex: 1 }}>{bill.name}</span>
-            <span style={{ flex: 1 }}>{bill.amount}</span>
-            <span style={{ flex: 1 }}>{bill.category}</span>
-            <span style={{ flex: 1 }}>
-              {bill.createTime ? bill.createTime.substring(0, 10) : "N/A"}
-            </span>
-          </li>
-        ))}
+
+        {bills.length === 0
+          ? // 生成10个占位元素
+            Array.from({ length: 10 }).map((_, index) => (
+              <li
+                key={index}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "8px 0",
+                  borderBottom: "1px solid #ccc",
+                  height: "40px",
+                }}
+              ></li>
+            ))
+          : bills.map((bill, index) => (
+              <li
+                key={index}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "8px 0",
+                  borderBottom: "1px solid #ccc",
+                  height: "40px",
+                }}
+              >
+                <span style={{ flex: 1 }}>{bill.name}</span>
+                <span style={{ flex: 1 }}>{bill.amount}</span>
+                <span style={{ flex: 1 }}>{bill.category}</span>
+                <span style={{ flex: 1 }}>
+                  {bill.createTime ? bill.createTime.substring(0, 10) : "N/A"}
+                </span>
+              </li>
+            ))}
       </ul>
       <div>
         <Button
