@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import BillService from "@/service/BillService"; // Adjust the import path as necessary
 import { Bill } from "@/types/Bill";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [bills, setBills] = useState<Bill[]>([]);
   const [monthlySpending, setMonthlySpending] = useState(0);
   const [newBill, setNewBill] = useState({
@@ -73,6 +75,14 @@ export default function Home() {
         <span className="italic text-4xl font-extrabold text-emerald-500">
           {monthlySpending ? `${monthlySpending}` : "N/A"}
         </span>
+        <Button
+          className="ml-16 p-2 bg-yellow-500 text-white rounded text-3xl"
+          onClick={() => {
+            router.push("./statistic");
+          }}
+        >
+          statistic
+        </Button>
       </h1>
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col space-y-4">
         <input

@@ -1,9 +1,12 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { getAllCategoriesSpending } from "@/service/BillService";
 import { CategorySpending } from "@/types/CategorySpending";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const router = useRouter();
   const [data, setData] = useState<CategorySpending[]>([]);
   useEffect(() => {
     getAllCategoriesSpending().then((data) => {
@@ -12,58 +15,40 @@ export default function Home() {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexWrap: "wrap",
-        padding: "20px",
-      }}
-    >
+    <div>
+      <h1 className="flex justify-center items-center space-x-4 py-4">
+        <Button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          Back
+        </Button>
+        <span className="text-3xl">Monthly Spending by Category</span>
+      </h1>
       <div
         style={{
-          width: "200px", // 固定宽度
-          height: "150px", // 固定高度
-          textAlign: "center",
-          margin: "10px",
-          padding: "20px",
-          border: "2px solid #000", // 加粗边框
-          borderRadius: "8px",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#FFD700", // 设置显眼的背景颜色
+          flexWrap: "wrap",
+          padding: "20px",
         }}
       >
         <div
-          style={{
-            fontWeight: "bold",
-            marginBottom: "10px",
-            fontSize: "23px",
-          }}
-        >
-          category
-        </div>
-        <div style={{ fontSize: "19px" }}>monthly spending</div>
-      </div>
-      {data.map((data, index) => (
-        <div
-          key={data.category}
           style={{
             width: "200px", // 固定宽度
             height: "150px", // 固定高度
             textAlign: "center",
             margin: "10px",
             padding: "20px",
-            border: "1px solid #ccc",
+            border: "2px solid #000", // 加粗边框
             borderRadius: "8px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: getColor(index),
+            backgroundColor: "#FFD700", // 设置显眼的背景颜色
           }}
         >
           <div
@@ -73,11 +58,41 @@ export default function Home() {
               fontSize: "23px",
             }}
           >
-            {data.category}
+            category
           </div>
-          <div style={{ fontSize: "20px" }}>{data.totalAmount}</div>
+          <div style={{ fontSize: "19px" }}>monthly spending</div>
         </div>
-      ))}
+        {data.map((data, index) => (
+          <div
+            key={data.category}
+            style={{
+              width: "200px", // 固定宽度
+              height: "150px", // 固定高度
+              textAlign: "center",
+              margin: "10px",
+              padding: "20px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: getColor(index),
+            }}
+          >
+            <div
+              style={{
+                fontWeight: "bold",
+                marginBottom: "10px",
+                fontSize: "23px",
+              }}
+            >
+              {data.category}
+            </div>
+            <div style={{ fontSize: "20px" }}>{data.totalAmount}</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
