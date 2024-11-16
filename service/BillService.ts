@@ -54,5 +54,10 @@ class BillService {
     return response.data;
   }
 }
-
+export async function getAllCategoriesSpending() {
+  const response = await axios.get(
+    `${BillService.API_URL}/getMonthlyTotalAmountByCategories`
+  );
+  return response.data;
+}
 export default BillService;
