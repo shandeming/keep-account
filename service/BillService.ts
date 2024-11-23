@@ -1,8 +1,6 @@
 import Config from "@/config/Config";
 import axios from "axios";
-import dotenv from "dotenv";
 
-dotenv.config();
 //TODO：去掉类包裹，参考https://github.com/gothinkster/node-express-realworld-example-app/blob/master/src/app/routes/article/article.service.ts
 class BillService {
   // public static API_URL = Config.API_URL;
